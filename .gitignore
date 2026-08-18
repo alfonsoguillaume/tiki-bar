@@ -1,0 +1,15 @@
+# Fichiers système
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Éditeurs
+.vscode/
+*.swp
+
+# Éventuels fichiers d'environnement/config sensibles
+.env
+wp-config.php
+
+# Archives générées
+*.zip
