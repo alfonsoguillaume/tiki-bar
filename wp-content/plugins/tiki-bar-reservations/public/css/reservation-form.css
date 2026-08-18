@@ -1,0 +1,51 @@
+/* Style minimal du formulaire de réservation. Volontairement neutre / peu
+   opinionated : ce plugin doit rester présentable même si le thème change. */
+
+.tikibar-reservation-form {
+	max-width: 480px;
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	margin-top: 1rem;
+}
+.tikibar-reservation-form .form-row {
+	display: flex;
+	flex-direction: column;
+	gap: .35rem;
+}
+.tikibar-reservation-form label {
+	font-size: .85rem;
+	font-weight: 600;
+}
+.tikibar-reservation-form input,
+.tikibar-reservation-form textarea {
+	padding: .6rem .75rem;
+	border: 1px solid rgba(18, 63, 60, .35);
+	border-radius: 4px;
+	background: #ffffff;
+	color: #10251f;
+	font: inherit;
+}
+.tikibar-reservation-form input:focus,
+.tikibar-reservation-form textarea:focus {
+	outline: 2px solid #123f3c;
+	outline-offset: 2px;
+	border-color: #123f3c;
+}
+.tikibar-reservation-form button {
+	align-self: flex-start;
+}
+
+.tikibar-form-notice {
+	padding: .9rem 1.1rem;
+	border-radius: 4px;
+	font-weight: 600;
+}
+.tikibar-form-success {
+	background: rgba(52, 199, 89, .15);
+	border: 1px solid rgba(52, 199, 89, .5);
+}
+.tikibar-form-error {
+	background: rgba(255, 69, 58, .15);
+	border: 1px solid rgba(255, 69, 58, .5);
+}

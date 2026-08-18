@@ -1,0 +1,238 @@
+/*
+Theme Name: Le Tiki Bar
+Theme URI: https://example.com/tiki-bar
+Author: Toi
+Author URI: https://example.com
+Description: Thème WordPress personnalisé pour Le Tiki Bar, bar clandestin de jardin. Développé manuellement dans le cadre d'un projet d'études (thème + plugin de réservation).
+Version: 1.0
+Requires at least: 6.0
+Tested up to: 6.6
+Requires PHP: 7.4
+License: GNU General Public License v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: tiki-bar
+*/
+
+/* ==========================================================================
+   1. DESIGN TOKENS
+   Palette pensée "speakeasy tropical" : jardin la nuit, torches, feuillage.
+   ========================================================================== */
+:root {
+  --tiki-void: #2f9384;      /* fond principal, lagon ensoleillé */
+  --tiki-frond: #fff6e8;     /* panneaux, cartes : sable clair qui ressort sur le lagon */
+  --tiki-bamboo: #b8860b;    /* bordures, filets, accents ambrés (assez foncé pour rester lisible) */
+  --tiki-ember: #ff6f59;     /* accent principal : corail */
+  --tiki-hibiscus: #123f3c;  /* accent secondaire : teal profond, liens actifs/hover */
+  --tiki-mist: #10251f;      /* texte foncé, contraste sur le lagon clair */
+
+  --font-display: "DM Serif Display", Georgia, serif;
+  --font-body: "Manrope", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --radius: 4px;
+  --max-width: 1140px;
+}
+
+/* ==========================================================================
+   2. RESET & BASE
+   ========================================================================== */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--tiki-void);
+  color: var(--tiki-mist);
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+img { max-width: 100%; height: auto; display: block; }
+a { color: var(--tiki-bamboo); text-decoration: underline; text-underline-offset: 3px; }
+a:hover, a:focus { color: var(--tiki-hibiscus); }
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
+  outline: 3px solid var(--tiki-ember);
+  outline-offset: 2px;
+}
+h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 400; line-height: 1.15; margin: 0 0 .5em; }
+h1 { font-size: clamp(2.2rem, 5vw, 3.4rem); }
+h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); color: var(--tiki-bamboo); }
+p { margin: 0 0 1.1em; }
+
+.container { max-width: var(--max-width); margin: 0 auto; padding: 0 1.5rem; }
+.screen-reader-text {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(1px,1px,1px,1px); white-space: nowrap;
+}
+.skip-link {
+  position: absolute; left: -999px; top: 0; background: var(--tiki-ember);
+  color: var(--tiki-mist); padding: .75rem 1.25rem; z-index: 999;
+}
+.skip-link:focus { left: 1rem; top: 1rem; }
+
+/* ==========================================================================
+   3. HEADER / NAV
+   ========================================================================== */
+.site-header {
+  border-bottom: 1px solid var(--tiki-frond);
+  background: var(--tiki-void);
+  position: sticky; top: 0; z-index: 50;
+}
+.site-header-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 1.5rem;
+}
+.site-branding { display: flex; align-items: center; gap: .75rem; text-decoration: none; }
+.site-title {
+  font-family: var(--font-display); font-size: 1.6rem; color: var(--tiki-mist);
+  margin: 0; letter-spacing: .02em;
+}
+.site-title a { color: var(--tiki-mist); text-decoration: none; }
+.site-description { font-family: var(--font-mono); font-size: .75rem; color: var(--tiki-bamboo); margin: 0; }
+
+.primary-menu-toggle {
+  display: none;
+  background: none; border: 1px solid var(--tiki-bamboo); color: var(--tiki-mist);
+  padding: .5rem .75rem; border-radius: var(--radius); font-family: var(--font-body);
+}
+.primary-navigation ul {
+  list-style: none; display: flex; gap: 1.75rem; margin: 0; padding: 0;
+}
+.primary-navigation a {
+  color: var(--tiki-mist); text-decoration: none; font-size: .95rem;
+  text-transform: uppercase; letter-spacing: .08em;
+  border-bottom: 2px solid transparent; padding-bottom: 4px;
+}
+.primary-navigation a:hover, .primary-navigation a:focus { border-bottom-color: var(--tiki-ember); color: var(--tiki-mist); }
+
+@media (max-width: 760px) {
+  .primary-menu-toggle { display: inline-block; }
+  .primary-navigation { display: none; width: 100%; }
+  .primary-navigation.is-open { display: block; }
+  .primary-navigation ul { flex-direction: column; gap: 0; padding: 1rem 0; }
+  .primary-navigation li { border-top: 1px solid var(--tiki-frond); }
+  .primary-navigation a { display: block; padding: .9rem 0; }
+  .site-header-inner { flex-wrap: wrap; }
+}
+
+/* ==========================================================================
+   4. SIGNATURE : filet "feuilles de palmier" (divider)
+   Élément récurrent qui remplace les traits génériques.
+   ========================================================================== */
+.frond-divider {
+  height: 14px; margin: 0;
+  background-image: repeating-linear-gradient(
+    115deg, var(--tiki-frond) 0 10px, transparent 10px 20px
+  );
+  opacity: .6;
+}
+
+/* ==========================================================================
+   5. BOUTONS
+   ========================================================================== */
+.btn {
+  display: inline-block; font-family: var(--font-body); font-weight: 700;
+  text-decoration: none; padding: .8rem 1.6rem; border-radius: var(--radius);
+  border: 1px solid transparent; cursor: pointer; font-size: 1rem;
+}
+.btn-ember {
+  background: var(--tiki-ember); color: var(--tiki-mist);
+  box-shadow: 0 0 0 rgba(232,84,46,.6);
+  transition: box-shadow .25s ease, transform .15s ease;
+}
+.btn-ember:hover, .btn-ember:focus { box-shadow: 0 0 18px rgba(255,122,61,.55); color: var(--tiki-mist); transform: translateY(-1px); }
+.btn-outline {
+  background: transparent; color: var(--tiki-mist); border-color: var(--tiki-bamboo);
+}
+.btn-outline:hover { border-color: var(--tiki-hibiscus); color: var(--tiki-mist); }
+
+/* ==========================================================================
+   6. HERO (front-page)
+   ========================================================================== */
+.hero {
+  padding: 5rem 0 4rem; text-align: center;
+  background: radial-gradient(ellipse at top, var(--tiki-frond) 0%, var(--tiki-void) 70%);
+}
+.hero .eyebrow {
+  font-family: var(--font-mono); text-transform: uppercase; letter-spacing: .2em;
+  color: var(--tiki-hibiscus); font-size: .8rem;
+}
+.hero p.lead { max-width: 640px; margin: 0 auto 2rem; font-size: 1.15rem; color: var(--tiki-mist); }
+.hero-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+/* ==========================================================================
+   7. CARTES (utilisées pour les soirées + contenu générique)
+   ========================================================================== */
+.card-grid {
+  display: grid; gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 340px));
+  justify-content: center;
+  padding: 3rem 0;
+}
+.card {
+  background: var(--tiki-frond); border: 1px solid rgba(184,134,11,.3);
+  border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column;
+}
+.card img { aspect-ratio: 4/3; object-fit: cover; }
+.card-body { padding: 1.25rem 1.4rem 1.5rem; flex: 1; display: flex; flex-direction: column; }
+.card h3 { font-size: 1.3rem; margin-bottom: .4rem; }
+.card .meta { font-family: var(--font-mono); font-size: .8rem; color: var(--tiki-bamboo); margin-bottom: .8rem; }
+
+/* ==========================================================================
+   8. CONTENU GÉNÉRIQUE (page.php / single.php / archive.php / 404)
+   ========================================================================== */
+.content-area { padding: 3rem 0; min-height: 40vh; }
+.entry-title { color: var(--tiki-mist); }
+.entry-content a { text-decoration-color: var(--tiki-bamboo); }
+
+/* ==========================================================================
+   9. FOOTER
+   ========================================================================== */
+.site-footer {
+  border-top: 1px solid var(--tiki-frond); padding: 2.5rem 0; margin-top: 3rem;
+  font-size: .9rem; color: var(--tiki-mist);
+}
+.site-footer .container { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+.site-footer a { color: var(--tiki-hibiscus); }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .btn-ember { transition: none; }
+}
+
+/* ==========================================================================
+   10. MODALE D'AVERTISSEMENT LÉGAL
+   Masquée par défaut ; .is-open ajoutée en JS au chargement si nécessaire.
+   ========================================================================== */
+.legal-modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(18, 63, 60, .55); /* teal profond semi-transparent, assombrit le fond clair derrière la modale */
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1.5rem;
+}
+.legal-modal-overlay.is-open {
+  display: flex;
+}
+body.tikibar-modal-open {
+  overflow: hidden; /* empêche le scroll de la page derrière la modale */
+}
+.legal-modal {
+  background: var(--tiki-frond);
+  border: 1px solid var(--tiki-bamboo);
+  border-radius: var(--radius);
+  max-width: 420px;
+  width: 100%;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0,0,0,.5);
+}
+.legal-modal-text {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+}

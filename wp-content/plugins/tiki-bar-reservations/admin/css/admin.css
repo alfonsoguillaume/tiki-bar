@@ -1,0 +1,19 @@
+.tikibar-badge {
+	display: inline-block;
+	padding: .25rem .7rem;
+	border-radius: 999px;
+	font-size: .78rem;
+	font-weight: 600;
+}
+.tikibar-badge-en_attente {
+	background: #fff3cd;
+	color: #7a5b00;
+}
+.tikibar-badge-acceptee {
+	background: #d4edda;
+	color: #14532d;
+}
+.tikibar-badge-refusee {
+	background: #f8d7da;
+	color: #7a1f28;
+}
