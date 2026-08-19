@@ -1,15 +1,27 @@
-# Fichiers système
-.DS_Store
-Thumbs.db
-desktop.ini
-
-# Éditeurs
-.vscode/
-*.swp
-
-# Éventuels fichiers d'environnement/config sensibles
-.env
+wp-admin/
+wp-includes/
 wp-config.php
-
-# Archives générées
-*.zip
+wp-config-sample.php
+wp-cron.php
+wp-login.php
+wp-mail.php
+wp-settings.php
+wp-signup.php
+wp-trackback.php
+wp-activate.php
+wp-blog-header.php
+wp-comments-post.php
+wp-links-opml.php
+wp-load.php
+xmlrpc.php
+index.php
+readme.html
+license.txt
+wp-content/plugins/akismet/
+wp-content/plugins/hello.php
+wp-content/themes/twentytwentyfive/
+wp-content/themes/twentytwentyfour/
+wp-content/themes/twentytwentythree/
+wp-content/themes/twentytwentytwo/
+wp-content/uploads/
+.env
