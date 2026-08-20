@@ -537,7 +537,7 @@ msgid "We collect information about visitors who comment on Sites that use our A
 msgstr "Nous récupérons des informations sur les personnes qui commentent sur les sites utilisant la fonctionnalité contre les indésirables d’Akismet. Les informations collectées dépendent de la façon dont Akismet a été paramétré sur le site, et incluent généralement l’adresse IP de la personne ayant laissé un commentaire, l’agent utilisateur, référent, URL du site (ainsi que d’autres informations provenant directement du commentaire comme le nom, identifiant, adresse e-mail, et le commentaire en lui même)."
 
 #. translators: %s: Akismet privacy URL
-#: class.akismet.php:2287
+#: class.akismet.php:2288
 msgid "This site uses Akismet to reduce spam. <a href=\"%s\" target=\"_blank\" rel=\"nofollow noopener\">Learn how your comment data is processed.</a>"
 msgstr "Ce site utilise Akismet pour réduire les indésirables. <a href=\"%s\" target=\"_blank\" rel=\"nofollow noopener\">En savoir plus sur la façon dont les données de vos commentaires sont traitées</a>."
 
@@ -1099,7 +1099,7 @@ msgid "Subscription Type"
 msgstr "Type d’abonnement "
 
 #. translators: 1: WordPress documentation URL, 2: Akismet download URL.
-#: class.akismet.php:2102
+#: class.akismet.php:2103
 msgid "Please <a href=\"%1$s\">upgrade WordPress</a> to a current version, or <a href=\"%2$s\">downgrade to version 2.4 of the Akismet plugin</a>."
 msgstr "Veuillez passer à la <a href=\"%1$s\">dernière version de WordPress</a> ou <a href=\"%2$s\">revenir à la version 2.4 de l’extension Akismet</a>."
 
@@ -1217,7 +1217,7 @@ msgstr "Rigueur de l’anti-spam Akismet"
 
 #. translators: 1: Current Akismet version number, 2: Minimum WordPress version
 #. number required.
-#: class.akismet.php:2100
+#: class.akismet.php:2101
 msgid "Akismet %1$s requires WordPress %2$s or higher."
 msgstr "Akismet %1$s requiert WordPress %2$s ou une version plus récente."
 

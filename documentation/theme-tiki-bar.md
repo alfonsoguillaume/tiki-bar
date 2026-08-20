@@ -167,7 +167,57 @@ Le JS associé (`assets/js/legal-modal.js`) utilise `sessionStorage` (mémoire d
 
 ---
 
-## 9. Résumé pour la soutenance
+---
+
+## 10. Les corrections faites suite à l'audit Lighthouse
+
+Après un premier audit, plusieurs points ont été corrigés directement dans le thème. Bon à savoir : ces corrections sont un excellent sujet de soutenance, ça montre une vraie démarche de test/amélioration, pas juste "j'ai codé et c'est fini".
+
+### Liens sans nom accessible
+
+Avant :
+```php
+<a href="<?php the_permalink(); ?>"><?php the_post_thumbnail( 'medium' ); ?></a>
+```
+
+Un lien qui ne contient qu'une image, sans texte, n'a **aucun nom accessible** pour un lecteur d'écran si l'image elle-même n'a pas de texte alternatif rempli (ce qui dépend de l'admin qui a uploadé l'image — on ne peut pas s'y fier). Correction :
+
+```php
+<a href="<?php the_permalink(); ?>"><?php the_post_thumbnail( 'medium' ); ?><span class="screen-reader-text"><?php the_title(); ?></span></a>
+```
+
+`screen-reader-text` est une classe qui cache visuellement le texte (voir `style.css`) mais le laisse parfaitement lisible par les technologies d'assistance. Ce texte caché donne un nom explicite au lien (le titre de la soirée), indépendamment du texte alternatif de l'image.
+
+### Contraste de texte insuffisant
+
+L'ambre (`--tiki-bamboo`) est une couleur trop claire pour servir de **couleur de texte** directement sur nos fonds (lagon clair ou sable) — le contraste ne respecte pas les seuils de lisibilité (WCAG), même si visuellement ça semblait correct à l'œil. Elle reste utilisée pour des bordures/dividers (où la règle de contraste est moins stricte), mais plus jamais comme couleur de texte : `--tiki-hibiscus` (foncé) l'a remplacée partout où c'était le cas (liens, sous-titres, méta-informations des cartes, titres `<h2>`).
+
+**Leçon à retenir** : une couleur peut fonctionner très bien en fond de bouton (avec un texte contrasté par-dessus) tout en étant un mauvais choix comme couleur de texte sur la page elle-même — ce sont deux usages différents avec des exigences de contraste différentes.
+
+### Chargement non-bloquant des polices
+
+```php
+add_filter( 'style_loader_tag', 'tikibar_async_load_fonts', 10, 2 );
+```
+
+Par défaut, le navigateur attend d'avoir complètement téléchargé une feuille de style externe (ici, les polices Google) avant d'afficher quoi que ce soit à l'écran — ça "bloque le rendu". La technique utilisée (charger d'abord en `media="print"`, puis basculer en `media="all"` une fois prête via l'attribut `onload`) permet à la page de s'afficher immédiatement avec une police de secours, puis de basculer discrètement vers la police définitive dès qu'elle est chargée. On ajoute aussi une balise `<noscript>` en secours, pour les cas rares où JavaScript est désactivé.
+
+### `preconnect` vers Google Fonts
+
+```html
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+```
+
+`preconnect` dit au navigateur *"tu vas bientôt avoir besoin de te connecter à ce serveur, commence la négociation (DNS, connexion sécurisée) dès maintenant, en parallèle du reste"*. Ça réduit le temps d'attente au moment où la police est réellement demandée.
+
+---
+
+## 11. Résumé pour la soutenance (complément)
+
+Si on te demande : *"Comment avez-vous vérifié l'accessibilité de votre site ?"*
+
+> "J'ai utilisé Lighthouse (intégré à Chrome) pour un premier audit automatique. Il a détecté des liens sans nom accessible sur mes images cliquables, que j'ai corrigés avec du texte caché visuellement mais lisible par les lecteurs d'écran, ainsi que des problèmes de contraste de texte que j'ai corrigés en revoyant quelles couleurs de ma palette pouvaient servir de texte et lesquelles devaient rester réservées aux fonds et bordures."
 
 Si on te demande : *"Explique-moi l'architecture de ton thème"* :
 

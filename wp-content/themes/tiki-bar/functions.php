@@ -114,14 +114,32 @@ function tikibar_widgets_init() {
 add_action( 'widgets_init', 'tikibar_widgets_init' );
 
 /**
- * 4. Largeur d'image par défaut pour cohérence avec le CSS (.card img)
+ * 4. Chargement non-bloquant des polices Google.
+ * Par défaut, une feuille de style externe bloque l'affichage de la page
+ * jusqu'à ce qu'elle soit entièrement téléchargée. Cette astuce (chargement
+ * en tant que "print" puis bascule en "all" une fois prête) permet à la page
+ * de s'afficher immédiatement avec les polices système, puis de basculer
+ * discrètement vers les polices définitives dès qu'elles sont prêtes.
+ */
+function tikibar_async_load_fonts( $html, $handle ) {
+	if ( 'tikibar-fonts' !== $handle ) {
+		return $html;
+	}
+	$html = str_replace( "media='all'", "media='print' onload=\"this.media='all'\"", $html );
+	$html .= '<noscript>' . str_replace( "media='print' onload=\"this.media='all'\"", "media='all'", $html ) . '</noscript>';
+	return $html;
+}
+add_filter( 'style_loader_tag', 'tikibar_async_load_fonts', 10, 2 );
+
+/**
+ * 5. Largeur d'image par défaut pour cohérence avec le CSS (.card img)
  */
 if ( ! isset( $content_width ) ) {
 	$content_width = 1140;
 }
 
 /**
- * 5. Nettoyage du <head> : on retire des infos qui n'apportent rien
+ * 6. Nettoyage du <head> : on retire des infos qui n'apportent rien
  * en matière de sécurité / performance (ex : la version de WP visible publiquement).
  */
 remove_action( 'wp_head', 'wp_generator' );

@@ -30,6 +30,34 @@ add_action( 'plugins_loaded', 'tikibar_resa_init' );
 function tikibar_resa_activation() {
 	$cpt = new TikiBar_CPT_Reservation();
 	$cpt->register_post_type();
+
+	// Sécurité d'ordre d'activation : on attribue les capacités liées aux
+	// réservations à l'administrateur ET au rôle "Gestionnaire" ici aussi
+	// (même logique que dans tiki-bar-activites), au cas où ce plugin serait
+	// activé avant, après, ou indépendamment de tiki-bar-activites.
+	$capacites_reservations = array(
+		'edit_reservations', 'edit_others_reservations', 'publish_reservations',
+		'read_private_reservations', 'delete_reservations', 'delete_private_reservations',
+		'delete_published_reservations', 'delete_others_reservations',
+		'edit_private_reservations', 'edit_published_reservations',
+	);
+
+	$admin = get_role( 'administrator' );
+	if ( $admin ) {
+		foreach ( $capacites_reservations as $cap ) {
+			$admin->add_cap( $cap );
+		}
+	}
+
+	// Le rôle "Gestionnaire" n'existe que si tiki-bar-activites est actif ;
+	// get_role() renvoie simplement null si ce n'est pas le cas, pas d'erreur.
+	$gestionnaire = get_role( 'gestionnaire_tikibar' );
+	if ( $gestionnaire ) {
+		foreach ( $capacites_reservations as $cap ) {
+			$gestionnaire->add_cap( $cap );
+		}
+	}
+
 	flush_rewrite_rules();
 }
 register_activation_hook( __FILE__, 'tikibar_resa_activation' );

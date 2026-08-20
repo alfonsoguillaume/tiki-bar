@@ -9,6 +9,8 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 <head>
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<?php wp_head(); // Hook indispensable : c'est ici que WP, les plugins et le SEO injectent leur code. ?>
 </head>
 <body <?php body_class(); ?>>

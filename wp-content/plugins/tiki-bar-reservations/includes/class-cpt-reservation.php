@@ -33,7 +33,8 @@ class TikiBar_CPT_Reservation {
 			'show_in_menu'    => true,
 			'menu_icon'       => 'dashicons-clipboard',
 			'menu_position'   => 6,
-			'capability_type' => 'post',
+			'capability_type' => array( 'reservation', 'reservations' ), // capacités propres, distinctes de celles des soirées
+			'map_meta_cap'    => true,
 			'supports'        => array( 'title' ),
 			'has_archive'     => false,
 			'publicly_queryable' => false,

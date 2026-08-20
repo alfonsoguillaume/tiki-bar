@@ -20,6 +20,9 @@ define( 'TIKIBAR_ACTIVITES_URL', plugin_dir_url( __FILE__ ) );
 // On charge les classes du plugin.
 require_once TIKIBAR_ACTIVITES_PATH . 'includes/class-cpt-soiree.php';
 require_once TIKIBAR_ACTIVITES_PATH . 'includes/class-meta-box.php';
+require_once TIKIBAR_ACTIVITES_PATH . 'includes/class-roles.php';
+require_once TIKIBAR_ACTIVITES_PATH . 'includes/class-dashboard.php';
+require_once TIKIBAR_ACTIVITES_PATH . 'includes/class-search.php';
 
 /**
  * On instancie les classes et on les "branche" sur WordPress au chargement des plugins.
@@ -27,8 +30,24 @@ require_once TIKIBAR_ACTIVITES_PATH . 'includes/class-meta-box.php';
 function tikibar_activites_init() {
 	new TikiBar_CPT_Soiree();
 	new TikiBar_Soiree_Meta_Box();
+	new TikiBar_Search();
+	if ( is_admin() ) {
+		new TikiBar_Dashboard();
+	}
 }
 add_action( 'plugins_loaded', 'tikibar_activites_init' );
+
+/**
+ * Fonction pont pour le thème : affiche le formulaire de recherche/filtrage
+ * sans que le thème ait besoin de connaître les détails internes du plugin.
+ */
+function tikibar_render_search_filters() {
+	static $search = null;
+	if ( null === $search ) {
+		$search = new TikiBar_Search();
+	}
+	$search->render_filters();
+}
 
 /**
  * À l'activation du plugin : on force WordPress à régénérer ses "rewrite rules"
@@ -41,6 +60,13 @@ function tikibar_activites_activation() {
 	$cpt = new TikiBar_CPT_Soiree();
 	$cpt->register_post_type();
 	$cpt->register_taxonomies();
+
+	// Rôles et capacités : l'administrateur récupère les nouvelles capacités
+	// (sinon il perdrait l'accès à ses propres soirées), et le rôle
+	// "Gestionnaire" est créé avec un accès limité au contenu métier.
+	TikiBar_Roles::grant_capabilities_to_administrator();
+	TikiBar_Roles::create_role();
+
 	flush_rewrite_rules();
 }
 register_activation_hook( __FILE__, 'tikibar_activites_activation' );

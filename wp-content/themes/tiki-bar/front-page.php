@@ -59,7 +59,7 @@ get_template_part( 'template-parts/legal-modal' );
 			?>
 			<article <?php post_class( 'card' ); ?>>
 				<?php if ( has_post_thumbnail() ) : ?>
-					<a href="<?php the_permalink(); ?>"><?php the_post_thumbnail( 'medium' ); ?></a>
+					<a href="<?php the_permalink(); ?>"><?php the_post_thumbnail( 'medium' ); ?><span class="screen-reader-text"><?php the_title(); ?></span></a>
 				<?php endif; ?>
 				<div class="card-body">
 					<h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>

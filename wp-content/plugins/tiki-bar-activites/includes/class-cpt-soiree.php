@@ -43,7 +43,8 @@ class TikiBar_CPT_Soiree {
 			'show_in_rest'       => true,           // indispensable pour Gutenberg + future API REST
 			'supports'           => array( 'title', 'editor', 'thumbnail', 'excerpt' ),
 			'menu_position'      => 5,
-			'capability_type'    => 'post',         // permet de rattacher des capacités custom plus tard (rôle Gestionnaire)
+			'capability_type'    => array( 'soiree', 'soirees' ), // capacités propres au CPT (edit_soirees, publish_soirees...) plutôt que celles, partagées, des articles de blog
+			'map_meta_cap'       => true, // indispensable : indique à WordPress de traduire automatiquement les vérifications ("peut modifier CETTE soirée précise") vers les bonnes capacités générales
 		);
 
 		register_post_type( 'soiree', $args );

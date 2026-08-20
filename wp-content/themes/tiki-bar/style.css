@@ -47,15 +47,15 @@ body {
   line-height: 1.6;
 }
 img { max-width: 100%; height: auto; display: block; }
-a { color: var(--tiki-bamboo); text-decoration: underline; text-underline-offset: 3px; }
-a:hover, a:focus { color: var(--tiki-hibiscus); }
+a { color: var(--tiki-hibiscus); text-decoration: underline; text-underline-offset: 3px; }
+a:hover, a:focus { color: var(--tiki-mist); }
 a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
   outline: 3px solid var(--tiki-ember);
   outline-offset: 2px;
 }
 h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 400; line-height: 1.15; margin: 0 0 .5em; }
 h1 { font-size: clamp(2.2rem, 5vw, 3.4rem); }
-h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); color: var(--tiki-bamboo); }
+h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); color: var(--tiki-hibiscus); }
 p { margin: 0 0 1.1em; }
 
 .container { max-width: var(--max-width); margin: 0 auto; padding: 0 1.5rem; }
@@ -87,7 +87,7 @@ p { margin: 0 0 1.1em; }
   margin: 0; letter-spacing: .02em;
 }
 .site-title a { color: var(--tiki-mist); text-decoration: none; }
-.site-description { font-family: var(--font-mono); font-size: .75rem; color: var(--tiki-bamboo); margin: 0; }
+.site-description { font-family: var(--font-mono); font-size: .75rem; color: var(--tiki-hibiscus); margin: 0; }
 
 .primary-menu-toggle {
   display: none;
@@ -175,7 +175,7 @@ p { margin: 0 0 1.1em; }
 .card img { width: 100%; aspect-ratio: 4/3; object-fit: cover; }
 .card-body { padding: 1.25rem 1.4rem 1.5rem; flex: 1; display: flex; flex-direction: column; }
 .card h3 { font-size: 1.3rem; margin-bottom: .4rem; }
-.card .meta { font-family: var(--font-mono); font-size: .8rem; color: var(--tiki-bamboo); margin-bottom: .8rem; }
+.card .meta { font-family: var(--font-mono); font-size: .8rem; color: var(--tiki-hibiscus); margin-bottom: .8rem; }
 
 /* ==========================================================================
    8. CONTENU GÉNÉRIQUE (page.php / single.php / archive.php / 404)
@@ -193,6 +193,23 @@ p { margin: 0 0 1.1em; }
 }
 .site-footer .container { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
 .site-footer a { color: var(--tiki-hibiscus); }
+
+/* ==========================================================================
+   11. FORMULAIRE DE RECHERCHE / FILTRAGE
+   ========================================================================== */
+.tikibar-search-form {
+  display: flex; flex-wrap: wrap; gap: 1.25rem; align-items: end;
+  margin-bottom: 1.5rem; padding: 1.5rem; background: var(--tiki-frond);
+  border-radius: var(--radius);
+}
+.tikibar-search-field { display: flex; flex-direction: column; gap: .35rem; min-width: 160px; }
+.tikibar-search-field label { font-size: .8rem; font-weight: 700; color: var(--tiki-mist); }
+.tikibar-search-field select,
+.tikibar-search-field input {
+  padding: .55rem .7rem; border: 1px solid rgba(18,63,60,.35); border-radius: 4px;
+  background: #fff; color: #10251f; font: inherit;
+}
+.tikibar-search-status { font-size: .85rem; color: var(--tiki-mist); min-height: 1.2em; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
