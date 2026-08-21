@@ -35,14 +35,20 @@ while ( have_posts() ) :
 		<p class="eyebrow">
 			<?php
 			$types = get_the_terms( get_the_ID(), 'type_soiree' );
+			$ambiances = get_the_terms( get_the_ID(), 'niveau_ambiance' );
+			$parts = array();
 			if ( $types && ! is_wp_error( $types ) ) {
-				echo esc_html( wp_list_pluck( $types, 'name' )[0] );
+				$parts[] = esc_html( wp_list_pluck( $types, 'name' )[0] );
 			}
+			if ( $ambiances && ! is_wp_error( $ambiances ) ) {
+				$parts[] = esc_html( wp_list_pluck( $ambiances, 'name' )[0] );
+			}
+			echo implode( ' · ', $parts );
 			?>
 		</p>
 		<h1><?php the_title(); ?></h1>
 
-		<ul class="soiree-meta" style="list-style:none; padding:0; font-family:var(--font-mono); color:var(--tiki-bamboo); display:flex; flex-wrap:wrap; gap:1.5rem; margin-bottom:2rem;">
+		<ul class="soiree-meta" style="list-style:none; padding:0; font-family:var(--font-mono); color:var(--tiki-hibiscus); display:flex; flex-wrap:wrap; gap:1.5rem; margin-bottom:2rem;">
 			<?php if ( $date ) : ?>
 				<li>📅 <?php echo esc_html( date_i18n( 'j F Y', strtotime( $date ) ) ); ?></li>
 			<?php endif; ?>

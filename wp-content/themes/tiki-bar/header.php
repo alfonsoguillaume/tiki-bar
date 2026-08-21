@@ -34,19 +34,23 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 			</span>
 		</a>
 
-		<button class="primary-menu-toggle" aria-controls="primary-menu" aria-expanded="false">
-			<?php esc_html_e( 'Menu', 'tiki-bar' ); ?>
-		</button>
+		<?php if ( has_nav_menu( 'primary' ) ) : ?>
+			<button class="primary-menu-toggle" aria-controls="primary-menu" aria-expanded="false">
+				<?php esc_html_e( 'Menu', 'tiki-bar' ); ?>
+			</button>
+		<?php endif; ?>
 
-		<nav class="primary-navigation" id="primary-menu" aria-label="<?php esc_attr_e( 'Menu principal', 'tiki-bar' ); ?>">
-			<?php
-			wp_nav_menu( array(
-				'theme_location' => 'primary',
-				'container'      => false,
-				'fallback_cb'    => false, // pas de menu par défaut moche si rien n'est configuré
-			) );
-			?>
-		</nav>
+		<?php if ( has_nav_menu( 'primary' ) ) : ?>
+			<nav class="primary-navigation" id="primary-menu" aria-label="<?php esc_attr_e( 'Menu principal', 'tiki-bar' ); ?>">
+				<?php
+				wp_nav_menu( array(
+					'theme_location' => 'primary',
+					'container'      => false,
+					'fallback_cb'    => false,
+				) );
+				?>
+			</nav>
+		<?php endif; ?>
 
 	</div>
 	<div class="frond-divider" aria-hidden="true"></div>
